@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Backbone Models";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@*CSS*@
+<style type="text/css">
+        
+    /* Hides bullet points from todo list */
+    #todoapp ul {
+    list-style-type: none;
+    }
+           
+</style> 
+
+
+<p>
+    Models are the heart of every application. It contains the interactive data and the logic surrounding it, such as data validation, 
+    getters and setters, default values, data initialization, conversions and so on. For our example, we are going to create a model called Todo, 
+    which will store a string of text (title) and whether the task has been completed or not.
+</p>
+
+
+@*Here instead of div#container we add the following HTML code:*@
+<section id="todoapp">
+    <header id="header">
+      <h1>Todos</h1>
+      <input id="new-todo" placeholder="What needs to be done?">
+    </header>
+    <section id="main">
+      <ul id="todo-list"></ul>
+    </section>
+  </section>
+
+<script type="text/javascript">
+
+    var app = {}; // create namespace for our app
+
+    //--------------
+    // Models
+    //--------------
+
+    // this is our model called Todo. It has 2 attributes: title and completed
+    app.Todo = Backbone.Model.extend({
+        defaults: {
+            title: '',
+            completed: false
+        }
+    });
+
+</script>

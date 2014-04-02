@@ -1,0 +1,166 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Backbone Views";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@*CSS*@
+<style type="text/css">
+        
+    /* Hides bullet points from todo list */
+    #todoapp ul {
+    list-style-type: none;
+    }
+           
+</style> 
+
+<section id="todoapp">
+    <header id="header">
+      <h1>Todos</h1>
+      <input id="new-todo" placeholder="What needs to be done?">
+    </header>
+    <section id="main">
+      <ul id="todo-list"></ul>
+    </section>
+  </section>
+
+    <p>
+        Views don't have the HTML markups for our application, but instead process data and link it to templates and it finally render HTML based on 
+        events or data changes. Backbone Views are the quivalent of controllers in .NET MVC. 
+    </p>
+    <p>
+        There are 4 basic properties in a view: el, initialize, render, and events.
+    </p>
+
+<script type="text/javascript">
+
+    var app = {}; // create namespace for our app
+
+
+    //--------------
+    // Models
+    //--------------
+
+    // this is our model called Todo
+    app.Todo = Backbone.Model.extend({
+        defaults: {
+            title: '',
+            completed: false
+        }
+    });
+
+    //--------------
+    // Collections
+    //--------------
+
+    app.TodoList = Backbone.Collection.extend({
+        model: app.Todo,
+        localStorage: new Store("backbone-todo")
+    });
+
+    // instance of the Collection
+    app.todoList = new app.TodoList();
+
+    //--------------
+    // Views
+    //--------------
+
+    // renders individual todo items list (li)
+    app.TodoView = Backbone.View.extend({
+        tagName: 'li',
+        template: _.template($('#item-template').html()),
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this; // enable chained calls
+        }
+    });
+
+    // renders the full list of todo items calling TodoView for each one.
+    app.AppView = Backbone.View.extend({
+        el: '#todoapp',
+        initialize: function () {
+            this.input = this.$('#new-todo');
+            app.todoList.on('add', this.addAll, this);
+            app.todoList.on('reset', this.addAll, this);
+            app.todoList.fetch(); // Loads list from local storage
+        },
+        events: {
+            'keypress #new-todo': 'createTodoOnEnter'
+        },
+        createTodoOnEnter: function (e) {
+            if (e.which !== 13 || !this.input.val().trim()) { // ENTER_KEY = 13
+                return;
+            }
+            app.todoList.create(this.newAttributes());
+            this.input.val(''); // clean input box
+        },
+        addOne: function (todo) {
+            var view = new app.TodoView({ model: todo });
+            $('#todo-list').append(view.render().el);
+        },
+        addAll: function () {
+            this.$('#todo-list').html(''); // clean the todo list
+            app.todoList.each(this.addOne, this);
+        },
+        newAttributes: function () {
+            return {
+                title: this.input.val().trim(),
+                completed: false
+            }
+        }
+    });
+
+    //--------------
+    // Initializers
+    //--------------   
+
+    app.appView = new app.AppView(); 
+
+
+</script>
+
+@*<section class="contact">
+    <header>
+        <h3>Phone</h3>
+    </header>
+    <p>
+        <span class="label">Main:</span>
+        <span>425.555.0100</span>
+    </p>
+    <p>
+        <span class="label">After Hours:</span>
+        <span>425.555.0199</span>
+    </p>
+</section>
+
+<section class="contact">
+    <header>
+        <h3>Email</h3>
+    </header>
+    <p>
+        <span class="label">Support:</span>
+        <span><a href="mailto:Support@example.com">Support@example.com</a></span>
+    </p>
+    <p>
+        <span class="label">Marketing:</span>
+        <span><a href="mailto:Marketing@example.com">Marketing@example.com</a></span>
+    </p>
+    <p>
+        <span class="label">General:</span>
+        <span><a href="mailto:General@example.com">General@example.com</a></span>
+    </p>
+</section>
+
+<section class="contact">
+    <header>
+        <h3>Address</h3>
+    </header>
+    <p>
+        One Microsoft Way<br />
+        Redmond, WA 98052-6399
+    </p>
+</section>*@

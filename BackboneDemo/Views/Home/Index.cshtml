@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Backbone Demo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="container">Loading...</div>
+
+
+<p>
+    Backbone.js is a JavaScript framework, among many others, that is gaining special attention in the web development community because it’s ease of use 
+    and the structure that it provides to JavaScript applications.
+</p>
+
+<p>
+    Backbone.js has hard dependency on underscore.js and a soft dependency on jQuery. It’s composed by the following modules:
+</p>
+
+<ul>
+<li>Views</li>
+<li>Events</li>
+<li>Models</li>
+<li>Collections</li>
+<li>Routers</li>
+</ul>
+
+        <script type="text/javascript">
+
+            var AppView = Backbone.View.extend({
+
+                // el - stands for element. Every view has an element associate in which HTML content will be rendered.
+                el: '#container',
+
+                // It's the first function called when this view it's instantiated.
+                initialize: function () {
+                    this.render();
+                },
+
+                // $el - it's a cached jQuery object (el), in which you can use jQuery functions to push content. Like the Hello World in this case.
+                render: function () {
+                    this.$el.html("Hello World");
+                }
+
+            });
+
+            var appView = new AppView();
+       
+       </script>

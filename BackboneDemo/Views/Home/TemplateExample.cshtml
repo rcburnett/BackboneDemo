@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Backbone Templates";
+    ViewBag.Message = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="container">Loading...</div>
+
+
+    <script type="text/javascript">
+        var AppView = Backbone.View.extend({
+
+            // el - stands for element. Every view has an element associate in which HTML content will be rendered.
+            el: $('#container'),
+
+            // template 
+            template: _.template("<h3>Hello <%= who %><h3>"),
+            
+            initialize: function () {
+                this.render();
+            },
+            
+            render: function () {
+                this.$el.html(this.template({ who: 'world!' }));
+            }
+        });
+
+        var appView = new AppView();
+    </script>
+
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+
+    <p>
+        Backbones has a utility/helper library called underscore.js and you can use their template solution out-of-the-box, but you can use any other template solution 
+        that you want like mustache or handlerbars. Let’s stick with _.js’s template for simplicity sake.
+    </p>
+    <p>
+        Underscore.js template has the following signature: _.template(templateString, [data], [settings])
+    </p>
+    <p>
+        where in the templateString you use the place holder <%= %> and <%- %> to substitute them with data. The later does HTML escape while the first one doesn’t. 
+        Moreover, you can use <% %> to run any javascript code.
+    </p>
+
+
+
+    <p>
+        Backbone’s Views are the equivalent of ‘controllers’ on MVC frameworks (like Ruby on Rails), if you are not familiar with MVC frameworks nevermind. 
+        Backbone’s Views glues together user events (clicks, pressed keys …), render HTML views and templates, and interacts with models which contains 
+        the data of the application.
+    </p>
+</article>
+
+<aside>
+    <h3>Source</h3>
+    <p>
+        <a href="http://adrianmejia.com/blog/2012/09/11/backbone-dot-js-for-absolute-beginners-getting-started/">adrianmejia.com</a>
+    </p>
+
+    <h3>References</h3>
+    <p>
+        <a href="http://backbonejs.org/">backbonejs.org</a>
+    </p>
+    <p>
+        <a href="http://underscorejs.org/?utm_source=adrianmejia.com">underscorcejs.org</a>
+    </p>
+
+</aside>

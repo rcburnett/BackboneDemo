@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Backbone Collections";
+    ViewBag.Message = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+@*CSS*@
+<style type="text/css">
+        
+    /* Hides bullet points from todo list */
+    #todoapp ul {
+    list-style-type: none;
+    }
+           
+</style> 
+
+<section id="todoapp">
+    <header id="header">
+      <h1>Todos</h1>
+      <input id="new-todo" placeholder="What needs to be done?">
+    </header>
+    <section id="main">
+      <ul id="todo-list"></ul>
+    </section>
+  </section>
+
+    <p>
+        Collections are ordered sets of models, where you can get and set models in the collection, listen for events when any 
+        element in the collection changes, and fetch the model’s data from the server.
+    </p>
+
+    <p>
+        Example: todoList.fetch();
+    </p>
+
+    <p>
+        Collections allows to save data (in database, file, memory), and thus it requires a reference to it. Therefore, you need to specify the url parameter with a 
+        relative url, where the model’s resource would be located on the server. Otherwise, you will get errors.
+    </p>
+
+
+<script type="text/javascript">
+
+    var app = {}; // create namespace for our app
+
+    //--------------
+    // Models
+    //--------------
+
+    // this is our model called Todo. It has 2 attributes: title and completed
+    app.Todo = Backbone.Model.extend({
+        defaults: {
+            title: '',
+            completed: false
+        }
+    });
+
+    //--------------
+    // Collections
+    //--------------
+
+    // this is a collection object which is simply an ordered set of our todo models
+    app.TodoList = Backbone.Collection.extend({
+        model: app.Todo,
+        // Collections allow us to save data (in database, file, memory), and thus requires a reference to it. Therefore, you need to specify the 
+        // url parameter with a relative url (url:"../api/todos"), where the model’s resource would be located on the server.
+        // For this example we are using HTML5 localstorage to store our data.
+        localStorage: new Store("backbone-todo") 
+    });
+
+    // instance of the Collection
+    app.todoList = new app.TodoList();
+
+</script>
